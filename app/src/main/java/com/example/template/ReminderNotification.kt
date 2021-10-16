@@ -21,6 +21,7 @@ object ReminderNotification {
             .setSmallIcon(R.drawable.ic_release)
             .setContentTitle(titleText)
             .setContentText(message)
+                .setContentIntent(PendingIntent.getActivity(context,0, Intent(Intent(context,MainActivity::class.java)),PendingIntent.FLAG_UPDATE_CURRENT))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setTicker(titleText)
             .setAutoCancel(true)
