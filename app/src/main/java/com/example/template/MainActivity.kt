@@ -13,14 +13,11 @@ import com.example.template.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var binding: ActivityMainBinding
-   // private lateinit var menuItem: ActionMenuItemView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appbar.toolbar)
-        //binding.appbar.toolbar.inflateMenu(R.menu.main_menu)
-       // menuItem= binding.appbar.toolbar.findViewById(R.id.notification) as ActionMenuItemView
         createNotificationChannel()
     }
     private fun createNotificationChannel() {
@@ -44,8 +41,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.notification ->{
-                Toast.makeText(this,"Hre  is",Toast.LENGTH_SHORT).show()
-                ReminderNotification.notify(this,"Her","Him")
+                ReminderNotification.notify(this,"Carlos","Learning Notifications")
             }
         }
         return true
