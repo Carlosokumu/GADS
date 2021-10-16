@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/backgroundSecondary</item>
         <!--   a darker variant of the primary color, used for
            the status bar (on Android 5.0+) and contextual app bars -->
-        <item name="colorPrimaryDark">@color/backgroundSecondary</item>
+        <item name="colorPrimaryDark">@color/purple_500</item>
         <!--   a secondary color for controls like checkboxes and text fields -->
         <item name="colorAccent">@color/colorAccent</item>
         <!-- activities background -->
