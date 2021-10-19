@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.template.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var binding: ActivityMainBinding
@@ -19,6 +20,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.appbar.toolbar)
         createNotificationChannel()
+        val user=FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            Toast.makeText(this,user.uid,Toast.LENGTH_SHORT).show()
+        }
+        else {
+            Toast.makeText(this,"am null",Toast.LENGTH_SHORT).show()
+        }
     }
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
