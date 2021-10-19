@@ -1,5 +1,6 @@
 package com.example.template
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -16,6 +17,9 @@ class Login : AppCompatActivity() {
         binding= ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null){
+            startActivity(Intent(this,MainActivity::class.java))
+        }
         binding.signUp.setOnClickListener {
             signUp()
         }
