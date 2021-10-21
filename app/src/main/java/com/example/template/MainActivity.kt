@@ -6,11 +6,13 @@ import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.template.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var binding: ActivityMainBinding
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         else {
             Toast.makeText(this,"am null",Toast.LENGTH_SHORT).show()
         }
+      //  initFcm()
     }
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -44,6 +47,15 @@ class MainActivity : AppCompatActivity() {
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+    fun initFcm(){
+        val svs=MessagingService()
+        svs?.token?.let { Log.d("amsent", it) }
+        svs.token?.let { sendRegistrationToServer(it) }
+    }
+    fun sendRegistrationToServer(token: String){
+        val db= FirebaseDatabase.getInstance().reference
+        db.child("users").child(FirebaseAuth.getInstance().currentUser?.uid!!).child("messaging_token").setValue(token)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
