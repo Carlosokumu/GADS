@@ -34,7 +34,7 @@ class Login : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(binding.email.text.toString(),binding.password.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user=User("mike")
+                    val user=User("mike","071670062","iamcarlos1245")
                     val db= FirebaseDatabase.getInstance().reference
                     db.child("users").child(FirebaseAuth.getInstance().currentUser?.uid!!).setValue(user)
                             .addOnCompleteListener(object : OnCompleteListener<Void>{

@@ -13,17 +13,20 @@ import android.widget.Button
 import android.widget.Toast
 import com.example.template.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var binding: ActivityMainBinding
     private  lateinit var updateName: String
+    private lateinit var db: DatabaseReference
     private  lateinit var updatePhone: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appbar.toolbar)
+        db=FirebaseDatabase.getInstance().reference
         createNotificationChannel()
         val user=FirebaseAuth.getInstance().currentUser
         if (user != null) {
@@ -33,6 +36,12 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,"am null",Toast.LENGTH_SHORT).show()
         }
       //  initFcm()
+        binding.updateName.setOnClickListener {
+            UpdateName()
+        }
+        binding.updatePhone.setOnClickListener {
+            updatePhone()
+        }
     }
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -77,7 +86,16 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-
+  fun updatePhone(){
+      db.child("users").child(FirebaseAuth.getInstance().currentUser?.uid!!)
+              .child("phone")
+              .setValue(binding.phone.text.toString())
+  }
+ fun UpdateName()  {
+     db.child("users").child(FirebaseAuth.getInstance().currentUser?.uid!!)
+             .child("name")
+             .setValue(binding.name.text.toString())
+ }
 
 
 }
