@@ -1,4 +1,4 @@
 package com.example.template
 
-data class User(val name: String,val phone: String,val messaging_token: String) {
+data class User constructor(var name: String?=null,var phone: String?=null,var messaging_token: String?=null) {
 }

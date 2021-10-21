@@ -102,16 +102,18 @@ class MainActivity : AppCompatActivity() {
          Query method One
        */
       val query=db.child("users").orderByKey().equalTo(FirebaseAuth.getInstance().currentUser?.uid)
-              .addListenerForSingleValueEvent(object :ValueEventListener{
+              query.addListenerForSingleValueEvent(object :ValueEventListener{
                   override fun onDataChange(snapshot: DataSnapshot) {
-                      for (dataSnapshot in snapshot.children){
-                          val user=dataSnapshot.getValue<User>()
+                      val children = snapshot.children
+                      children.forEach {
+                          Log.d("user",it.toString())
+                          val user=it.getValue(User::class.java)
                           if (user != null) {
-                              Log.d("querryOne", user.name)
+                              user.messaging_token?.let { it1 -> Log.d("myuser", it1) }
                           }
                       }
-                  }
 
+                  }
                   override fun onCancelled(error: DatabaseError) {
 
                   }
