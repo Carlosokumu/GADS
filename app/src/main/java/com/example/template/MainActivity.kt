@@ -13,8 +13,8 @@ import android.widget.Button
 import android.widget.Toast
 import com.example.template.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var binding: ActivityMainBinding
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         binding.updatePhone.setOnClickListener {
             updatePhone()
         }
+        getAccountDetails()
     }
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -96,6 +97,27 @@ class MainActivity : AppCompatActivity() {
              .child("name")
              .setValue(binding.name.text.toString())
  }
+  fun getAccountDetails()  {
+      /*
+         Query method One
+       */
+      val query=db.child("users").orderByKey().equalTo(FirebaseAuth.getInstance().currentUser?.uid)
+              .addListenerForSingleValueEvent(object :ValueEventListener{
+                  override fun onDataChange(snapshot: DataSnapshot) {
+                      for (dataSnapshot in snapshot.children){
+                          val user=dataSnapshot.getValue<User>()
+                          if (user != null) {
+                              Log.d("querryOne", user.name)
+                          }
+                      }
+                  }
+
+                  override fun onCancelled(error: DatabaseError) {
+
+                  }
+
+              })
+  }
 
 
 }
